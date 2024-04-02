@@ -1,0 +1,59 @@
+version: "3.1"
+
+stories:
+
+- story: happy path
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_great
+  - action: utter_happy
+
+- story: sad path 1
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_unhappy
+  - action: utter_cheer_up
+  - action: utter_did_that_help
+  - intent: affirm
+  - action: utter_happy
+
+- story: sad path 2
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_unhappy
+  - action: utter_cheer_up
+  - action: utter_did_that_help
+  - intent: deny
+  - action: utter_goodbye
+
+#- story: activate id form loop
+#  steps:
+#  - intent: make_encounter
+#  - action: id_form
+#  - active_loop: id_form
+#
+#- story: submit form
+#  steps:
+#  - intent: make_encounter
+#  - active_loop: id_form
+#  - action: id_form
+#  - active_loop: null
+##  - slot_was_set:
+##      requested_slot: null
+#  - action: action_make_encounter_for_scp
+#  - action: action_reset_all_slots
+
+
+#- story: User provides ID after being asked
+#  steps:
+#  - intent: make_encounter
+#  - action: action_ask_id
+#  - intent: scp_id
+#    entities:
+#    - id: 1012114560133184
+#  - slot_was_set:
+#    - scp_id: 1012114560133184
+#  - action: action_make_encounter_for_scp

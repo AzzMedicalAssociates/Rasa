@@ -1,0 +1,141 @@
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+
+- intent: goodbye
+  examples: |
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+
+- intent: affirm
+  examples: |
+    - yes
+    - y
+    - indeed
+    - of course
+    - that sounds good
+    - correct
+
+- intent: deny
+  examples: |
+    - no
+    - n
+    - never
+    - I don't think so
+    - don't like that
+    - no way
+    - not really
+
+- intent: mood_great
+  examples: |
+    - perfect
+    - great
+    - amazing
+    - feeling like a king
+    - wonderful
+    - I am feeling very good
+    - I am great
+    - I am amazing
+    - I am going to save the world
+    - super stoked
+    - extremely good
+    - so so perfect
+    - so good
+    - so perfect
+
+- intent: mood_unhappy
+  examples: |
+    - my day was horrible
+    - I am sad
+    - I don't feel very well
+    - I am disappointed
+    - super sad
+    - I'm so sad
+    - sad
+    - very sad
+    - unhappy
+    - not good
+    - not very good
+    - extremely sad
+    - so saad
+    - so sad
+
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+
+- intent: make_encounter
+  examples: |
+    - Make an encounter for SCP
+    - Can you make an encounter for SCP
+    - are you able to make an encounter for SCP
+    - encounter for scp
+
+- intent: make_booking
+  examples: |
+    - can you please book a seat for me
+    - please book a movie ticket for me
+    - are you able to book a ticket for me
+
+#- intent: make_encounter_once
+#  examples: |
+#    - Make an encounter for SCP at once
+#    - Can you make encounter at once
+#    - are you able to make an encounter for SCP at once
+#    - encounter for scp at once
+
+- intent: data
+  examples: |
+    - My ID is [1005971](id)
+    - The ID is [1005371](id)
+    - Here is my ID: [1023971](id)
+    - [1005971](id)
+    - My ID is [100dg71](id)
+    - The ID is [10g5371](id)
+    - Here is my ID: [dfhkers](id)
+    - [jiwehgd](id)
+    - [hgskbde](id)
+    - [1005e71](id)
+    - [1003j7x](id)
+    - [1325djs](id)
+    - [102sd82](id)
+    - Here is the start Date [2024-02-03](date)
+    - The start date is [2023-11-06](date)
+    - Here is the date: [2022-05-23](date)
+    - [2024-07-12](date)
+    - Here is the start Date [2024-02-ss](date)
+    - The start date is [20se-11-06](date)
+    - Here is the date: [2022-0v-23](date)
+    - [2024-se-12](date)
+
+- intent: details
+  examples: |
+    - Here is my ID [1005971](id) and start date [2024-02-03](date) now make an encounter for scp
+    - make an encounter for scp here is my ID [1005971](id) and start date [2024-02-03](date)
+

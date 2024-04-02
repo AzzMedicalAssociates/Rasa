@@ -1,0 +1,108 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - mood_great
+  - mood_unhappy
+  - bot_challenge
+  - make_encounter
+  - data
+#  - make_encounter_once
+  - details
+#  - make_booking
+
+entities:
+  - id
+  - date
+  - details
+
+slots:
+  id:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: id
+        conditions:
+        - active_loop: id_form
+          requested_slot: id
+  date:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: date
+  details:
+    type: list
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: details
+
+forms:
+  id_form:
+    required_slots:
+    - id
+    - date
+  details_form:
+    required_slots:
+      - details
+
+
+actions:
+  - action_make_encounter_for_scp
+  - validate_id_form
+  - validate_date_form
+  - action_reset_all_slots
+
+
+responses:
+  utter_greet:
+  - text: "Hey! How are you?"
+
+  utter_cheer_up:
+  - text: "Here is something to cheer you up:"
+    image: "https://i.imgur.com/nGF1K8f.jpg"
+
+  utter_did_that_help:
+  - text: "Did that help you?"
+
+  utter_happy:
+  - text: "Great, carry on!"
+
+  utter_goodbye:
+  - text: "Bye"
+
+  utter_iamabot:
+  - text: "I am a bot, powered by Rasa."
+
+  utter_ask_id:
+    - text: "Sure, Please provide your ID"
+    - text: "Ok, can you please provide your ID"
+    - text: "Ok, can I have your ID?"
+    - text: "Yes, Can I have your ID?"
+    - text: "Please provide the correct ID so that I can proceed"
+    - text: "Please re-enter the ID"
+
+  utter_ask_date:
+    - text: "Please Enter Start-Date according to format: (yyyy-mm-dd)"
+    - text: "Please also enter the Start-Date according to format: (yyyy-mm-dd)"
+    - text: "Please re-enter the Start-Date according to format: (yyyy-mm-dd)"
+
+#  utter_booking:
+#    - text: "ok i can book"
+#    - text: "sure please provide me the details of ticket"
+
+#  utter_ask_details:
+#    - text: "Please Enter your 7-digit ID and Start-Date according to format: (yyyy-mm-dd)"
+#    - text: "Please re-enter your 7-digit ID and Start-Date according to format: (yyyy-mm-dd)"
+
+  utter_script_response:
+  - text: "Here is the response from the script: {response}"
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
