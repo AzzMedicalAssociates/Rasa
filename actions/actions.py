@@ -500,7 +500,7 @@ class ActionMakeEncounterForScp(Action):
                     title = "Please check your connection and try again."
                     dispatcher.utter_message(text=message)
                     dispatcher.utter_message(text=title)
-        driver_path = "chromedriver.exe"
+        driver_path = "/app/chromedriver.exe"
         # date_1 = get_valid_date()
         x = ReadingsExtraction(driver_path, date_1)
         x.start_request("https://portal.smartmeterrpm.com/login")
