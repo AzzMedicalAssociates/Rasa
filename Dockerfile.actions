@@ -15,10 +15,10 @@ COPY actions/ /app/actions
 COPY data/ /app/data
 
 # Copy the chromedriver.exe file into the container
-COPY chromedriver.exe /app/chromedriver.exe
+COPY chromedriver /app/chromedriver
 
-# Set executable permissions for chromedriver.exe
-RUN chmod +x /app/chromedriver.exe
+# Set executable permissions for chromedriver
+RUN chmod +x /app/chromedriver
 
 # Expose port 5055 to allow external connections
 EXPOSE 5055
