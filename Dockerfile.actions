@@ -14,8 +14,14 @@ WORKDIR /app
 COPY actions/ /app/actions
 COPY data/ /app/data
 
+# Copy the chromedriver.exe file into the container
+COPY chromedriver.exe /app/chromedriver.exe
+
 # Expose port 5055 to allow external connections
 EXPOSE 5055
 
 # Command to run the action server
-CMD ["rasa", "run", "actions", "--cors", "*"]
+CMD ["rasa", "run", "actions", "--cors", "*", "--debug"]
+
+
+
