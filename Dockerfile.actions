@@ -1,5 +1,11 @@
 # Use the official Python image as the base image
-FROM python:3.9-slim
+FROM python:3.10-slim
+
+# Copy the requirements file into the container.
+COPY requirements.txt .
+
+# Install the dependencies from the requirements file.
+RUN python -m pip install --no-cache-dir -r requirements.txt
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -7,9 +13,6 @@ WORKDIR /app
 # Copy the contents of the actions directory into the container
 COPY actions/ /app/actions
 COPY data/ /app/data
-
-# Install any dependencies required for the action server
-RUN pip install rasa-sdk
 
 # Expose port 5055 to allow external connections
 EXPOSE 5055
