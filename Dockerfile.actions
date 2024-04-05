@@ -2,19 +2,17 @@
 FROM python:3.10-slim
 
 # Update and install necessary packages
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     wget \
     gnupg \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Set up Google Chrome repository
+# Set up Google Chrome repository and install Google Chrome
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
-    && echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
-
-# Install a specific version of Google Chrome
-RUN apt-get update && apt-get install -y \
-    google-chrome-stable=123.0.6312.86-1 \
+    && echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list \
+    && apt-get update \
+    && apt-get install -y google-chrome-stable \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy the requirements file into the container
@@ -41,6 +39,3 @@ EXPOSE 5055
 
 # Command to run the action server
 CMD ["rasa", "run", "actions", "--cors", "*", "--debug"]
-
-# Verify that Google Chrome launches successfully
-RUN google-chrome-stable --version
