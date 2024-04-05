@@ -6,15 +6,21 @@ RUN apt-get update && apt-get install -y \
     wget \
     gnupg \
     curl \
+    libxss1 \
+    libappindicator1 \
+    libindicator7 \
+    fonts-liberation \
+    libappindicator3-1 \
+    xdg-utils \
     && rm -rf /var/lib/apt/lists/*
 
 # Set up Google Chrome repository
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
     && echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
 
-# Install Google Chrome
+# Install a specific version of Google Chrome
 RUN apt-get update && apt-get install -y \
-    google-chrome-stable \
+    google-chrome-stable=123.0.6312.86-1 \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy the requirements file into the container
@@ -41,3 +47,15 @@ EXPOSE 5055
 
 # Command to run the action server
 CMD ["rasa", "run", "actions", "--cors", "*", "--debug"]
+
+# Set up the display environment variable for Chrome
+ENV DISPLAY=:99
+
+# Start Xvfb (X Virtual Frame Buffer) in the background
+RUN Xvfb :99 -screen 0 1024x768x24 &
+
+# Wait for Xvfb to start
+RUN sleep 3
+
+# Verify that Google Chrome launches successfully
+RUN google-chrome-stable --version
