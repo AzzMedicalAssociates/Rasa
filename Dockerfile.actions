@@ -1,37 +1,43 @@
 # Use the official Python image as the base image
 FROM python:3.10-slim
 
-# Update and install necessary packages
-RUN apt-get update && apt-get upgrade -y && apt-get install -y \
-    wget \
-    gnupg \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
+RUN CHROMEDRIVER_VERSION=`curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE` && \
+   mkdir -p /opt/chromedriver-$CHROMEDRIVER_VERSION && \
+   curl -sS -o /tmp/chromedriver_linux64.zip http://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip && \
+   unzip -qq /tmp/chromedriver_linux64.zip -d /opt/chromedriver-$CHROMEDRIVER_VERSION && \
+   rm /tmp/chromedriver_linux64.zip && \
+   chmod +x /opt/chromedriver-$CHROMEDRIVER_VERSION/chromedriver && \
+   ln -fs /opt/chromedriver-$CHROMEDRIVER_VERSION/chromedriver /usr/local/bin/chromedriver
 
-# Set up Google Chrome repository and install Google Chrome
-RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
-    && echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list \
-    && apt-get update \
-    && apt-get install -y google-chrome-stable \
-    && rm -rf /var/lib/apt/lists/*
+# Install Google Chrome
+RUN curl -sS -o – https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add – && \
+   echo “deb http://dl.google.com/linux/chrome/deb/ stable main” >> /etc/apt/sources.list.d/google-chrome.list && \
+   apt-get -yqq update && \
+   apt-get -yqq install google-chrome-stable && \
+   rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y \
+  unzip \
+  curl \
+  gnupg \
+  && rm -rf /var/lib/apt/lists/*
 
+RUN curl -sS -o – https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
+
+RUN echo “deb http://dl.google.com/linux/chrome/deb/ stable main” >> /etc/apt/sources.list.d/google-chrome.list
+
+RUN apt-get -y update
+
+RUN apt-get install -y google-chrome-stable
+# Set the working directory inside the container
+WORKDIR /app
 # Copy the requirements file into the container
 COPY requirements.txt .
 
 # Install the dependencies from the requirements file
 RUN python -m pip install --no-cache-dir -r requirements.txt
 
-# Set the working directory inside the container
-WORKDIR /app
-
 # Copy the contents of the actions directory into the container
 COPY . .
-
-# Copy the chromedriver.exe file into the actions directory
-COPY chromedriver /app/actions/chromedriver
-
-# Set executable permissions for chromedriver
-RUN chmod +x /app/actions/chromedriver
 
 # Expose port 5055 to allow external connections
 EXPOSE 5055
