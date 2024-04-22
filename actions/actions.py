@@ -57,7 +57,7 @@ class ActionMakeEncounterForScp(Action):
 
         class ReadingsExtraction:
             def __init__(self, webdriver_path, date_1):
-                #self.webdriver_path = webdriver_path
+                self.webdriver_path = webdriver_path
                 self.date_1 = date_1
                 self.options = Options()
                 self.options.add_argument("--headless")
@@ -71,8 +71,10 @@ class ActionMakeEncounterForScp(Action):
                 self.options.add_argument('--no-sandbox') 
                 self.options.add_argument('--disable-dev-shm-usage')
                 
-                #self.driver_service = Service(self.webdriver_path)
-                self.driver = webdriver.Chrome(options=self.options)
+                self.driver_service = Service(self.webdriver_path)
+                #self.driver = webdriver.Chrome(options=self.options)
+                self.driver = webdriver.Chrome(service=self.driver_service, options=self.options)
+
 
             readings_data = []
             not_readings_data = []
